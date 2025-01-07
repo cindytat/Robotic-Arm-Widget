@@ -95,7 +95,7 @@ stepper_num = 0
 if not dpiStepper.initialize():
     print("Communication with the DPiStepper board failed")
 
-speed_steps_per_second = 1600
+speed_steps_per_second = 2000
 accel_steps_per_second_per_second = speed_steps_per_second
 
 # ////////////////////////////////////////////////////////////////
@@ -127,6 +127,12 @@ class MainScreen(Screen):
         dpiStepper.moveToRelativePositionInSteps(stepper_num, -2325, True)
         dpiStepper.enableMotors(False)
         self.isBallOnShortTower()
+        dpiStepper.enableMotors(True)
+        dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
+        dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
+        dpiStepper.moveToRelativePositionInSteps(stepper_num, -600, True)
+        dpiStepper.enableMotors(False)
+        self.isBallOnTallTower()
         print("Process arm movement here")
 
     def toggleMagnet(self):
@@ -144,7 +150,10 @@ class MainScreen(Screen):
         #arm.home(self.homeDirection)
 
     def isBallOnTallTower(self):
-
+        if dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0:
+            dpiComputer.writeServo(self.servo_num, 90)
+            sleep(1)
+            dpiComputer.writeServo(self.servo_num, 180)
         print("Determine if ball is on the top tower")
 
     def isBallOnShortTower(self):
