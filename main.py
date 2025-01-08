@@ -95,7 +95,7 @@ stepper_num = 0
 if not dpiStepper.initialize():
     print("Communication with the DPiStepper board failed")
 
-speed_steps_per_second = 1000
+speed_steps_per_second = 1500
 accel_steps_per_second_per_second = speed_steps_per_second
 
 # ////////////////////////////////////////////////////////////////
@@ -173,13 +173,13 @@ class MainScreen(Screen):
 
     def isBallOnTallTower(self):
         return dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0
-        print("Determine if ball is on the top tower")
+        #print("Determine if ball is on the top tower")
 
     def isBallOnShortTower(self):
         if dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0:
             return True
         return False
-        print("Determine if ball is on the bottom tower")
+        #print("Determine if ball is on the bottom tower")
 
     def initialize(self):
         print("Home arm and turn off magnet")
