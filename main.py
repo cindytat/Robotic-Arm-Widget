@@ -173,13 +173,13 @@ class MainScreen(Screen):
 
     def isBallOnTallTower(self):
         return dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0
-        #print("Determine if ball is on the top tower")
+        print("Determine if ball is on the top tower")
 
     def isBallOnShortTower(self):
         if dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0:
             return True
         return False
-        #print("Determine if ball is on the bottom tower")
+        print("Determine if ball is on the bottom tower")
 
     def initialize(self):
         print("Home arm and turn off magnet")
