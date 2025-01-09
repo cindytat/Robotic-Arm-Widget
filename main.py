@@ -125,7 +125,8 @@ class MainScreen(Screen):
         dpiStepper.setSpeedInStepsPerSecond(0, speed_steps_per_second)
         dpiStepper.setAccelerationInStepsPerSecondPerSecond(0, accel_steps_per_second_per_second)
 
-        dpiStepper.moveToRelativePositionInSteps(0, -2325, True)
+        dpiStepper.moveToRelativePositionInSteps(0, -1900, True)
+        print("move to ball")
         dpiStepper.enableMotors(False)
 
         self.toggleMagnet()
@@ -137,7 +138,7 @@ class MainScreen(Screen):
 
             sleep(2)
 
-            dpiStepper.moveToRelativePositionInSteps(stepper_num, -600, True)
+            dpiStepper.moveToRelativePositionInSteps(stepper_num, -550, True)
             dpiComputer.writeServo(servo_num, 90)
             sleep(2)
             self.toggleMagnet()
@@ -160,6 +161,11 @@ class MainScreen(Screen):
         print("Process magnet here")
 
     def auto(self):
+        self.homeArm()
+        print("home")
+        self.toggleArm()
+        self.homeArm()
+        sleep(3)
         print("Run the arm automatically here")
 
     def setArmPosition(self, position):
@@ -168,8 +174,10 @@ class MainScreen(Screen):
         print("Move arm here")
 
     def homeArm(self):
-        pass
-        #arm.home(self.homeDirection)
+        dpiStepper.enableMotors(True)
+        dpiStepper.moveToHomeInSteps(stepper_num, -1, 800, 3000)
+        dpiStepper.enableMotors(False)
+        #arm.home(self.homeDirection))
 
     def isBallOnTallTower(self):
         return dpiComputer.readDigitalIn(dpiComputer.IN_CONNECTOR__IN_1) == 0
